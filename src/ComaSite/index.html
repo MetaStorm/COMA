@@ -1,10 +1,133 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <title></title>
+  <style>
+    html {
+      font-size: 14px;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+  </style>
+  <title>Triple A - Olympic</title>
+  <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2017.2.621/styles/kendo.common.min.css" />
+  <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2017.2.621/styles/kendo.default.min.css" />
+  <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2017.2.621/styles/kendo.default.mobile.min.css" />
+
+  <script src="https://kendo.cdn.telerik.com/2017.2.621/js/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.js"></script>
+  <script src="https://kendo.cdn.telerik.com/2017.2.621/js/kendo.all.min.js"></script>
 </head>
 <body>
+
+  <div id="example">
+    <div id="grid" style="float:left"></div>
+
+    <script>
+      $(document).ready(function () {
+        //#region Settings
+        var apiPath = "api/DataHub";
+        var env = location.href.match(/http:\/\/localhost/i) ? 'dev' : 'qa';
+        var dataServiceHost = {
+          dev: "http://localhost:64211",
+          //dev: "http://usmrtpwiisq01:97/Services/DataHub",
+          qa:"https://usmrtpwiisq01:497/Services/DataHub",
+          //qa: location.origin + "/Services/DataHub"
+        };
+        var serviceUrl = [dataServiceHost[env], apiPath].join("/");
+        //#endregion
+
+        // Show grid
+        var dbObjectName = "olympic_VIsAaas";
+        showGrid("#grid", serviceUrl, dbObjectName);
+
+        //#region Helpers
+        function showGrid(container, serviceUrl, dbObjectName) {
+          var endPoint = serviceUrl + '/' + dbObjectName;
+          $(container).kendoGrid({
+            dataSource: {
+              type: "odata-v4",
+              batch: false,
+              transport: {
+                read: {
+                  url: endPoint,
+                  xhrFields: {
+                    withCredentials: true
+                  }
+                },
+                update: {
+                  url: function (data) {
+                    return endPoint + "('" + data.SecurityCode + "')";
+                  },
+                  xhrFields: {
+                    withCredentials: true
+                  }
+                }
+              },
+              serverPaging: true,
+              pageSize: 20,
+              schema: {
+                model: {
+                  id: "SecurityCode",
+                  fields: {
+                    SecurityCode: { editable: false },
+                    SecurityName: { editable: false }
+                  }
+                }
+              }
+            },
+            toolbar: ["save", "cancel", "excel", "pdf"],
+            excel: {
+              allPages: true,
+              fileName: dbObjectName
+            },
+            selectable: "multiple row",
+            sortable: {
+              mode: "single",
+              allowUnsort: true
+            },
+            filterable: {
+              extra: false,
+              mode: "row"
+            },
+            pageable: {
+              buttonCount: 5
+            },
+            scrollable: false,
+            groupable: false,
+            editable: { update: true, destroy: false },
+            columns: [
+              {
+                field: "SecurityCode",
+                title: "Security Code"
+              },
+              {
+                field: "SecurityName",
+                title: "Security Name"
+                //,              format: "{0:c}"
+              },
+              {
+                field: "IsAaa",
+                title: "Is Aaa",
+                sortable: true,
+                editor: customBoolEditor("IsAaa"),
+                width: "50px",
+                filterable: false
+                //,              format: "{0:c}"
+              }
+              //,            { command: ["edit"/*, "destroy"*/], title: "&nbsp;", width: "250px" }
+            ]
+          });
+        }
+        function customBoolEditor(fieldName) {
+          return function (container, options) {
+            $('<input class="k-checkbox" type="checkbox" name="' + fieldName + '" data-type="boolean" data-bind="checked:' + fieldName + '">').appendTo(container);
+            $('<label class="k-checkbox-label">&#8203;</label>').appendTo(container);
+          }
+        }
+        //#endregion
+      });
+    </script>
+
+  </div>
 
 </body>
 </html>
