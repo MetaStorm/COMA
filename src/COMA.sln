@@ -7,6 +7,27 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComaModel", "ComaModel\Coma
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComaDataAPI", "ComaDataAPI\ComaDataAPI.csproj", "{0A090917-B59A-4B6C-81AC-A194CBFDD665}"
 EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "ComaSite", "ComaSite\", "{33D61538-E352-4472-AB11-E614819879B6}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.6.1"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_60070"
+		Debug.AspNetCompiler.PhysicalPath = "ComaSite\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_60070\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_60070"
+		Release.AspNetCompiler.PhysicalPath = "ComaSite\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_60070\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "60070"
+		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +42,10 @@ Global
 		{0A090917-B59A-4B6C-81AC-A194CBFDD665}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A090917-B59A-4B6C-81AC-A194CBFDD665}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0A090917-B59A-4B6C-81AC-A194CBFDD665}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33D61538-E352-4472-AB11-E614819879B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33D61538-E352-4472-AB11-E614819879B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33D61538-E352-4472-AB11-E614819879B6}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{33D61538-E352-4472-AB11-E614819879B6}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
