@@ -1,4 +1,4 @@
-### Common Architecture
-Testable >> Configurable >> Traceable >> Loggable >> ...
-
+![coma](https://github.com/dimokgit/COMA/raw/master/coma.png "COMA")
+### Common Architecture - COMA
+Testable >> Configurable >> Traceable >> Loggable >> ... 
 | [Web Site](http://comasite.azurewebsites.net/) | [Data Web API](http://comadataapi.azurewebsites.net/swagger/ui/index) |
