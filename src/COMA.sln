@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.15
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComaModel", "ComaModel\ComaModel.csproj", "{79A70AD2-D549-4E9D-AA05-F242B6DA94B9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComaDataAPI", "ComaDataAPI\ComaDataAPI.csproj", "{0A090917-B59A-4B6C-81AC-A194CBFDD665}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{79A70AD2-D549-4E9D-AA05-F242B6DA94B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79A70AD2-D549-4E9D-AA05-F242B6DA94B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79A70AD2-D549-4E9D-AA05-F242B6DA94B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79A70AD2-D549-4E9D-AA05-F242B6DA94B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A090917-B59A-4B6C-81AC-A194CBFDD665}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A090917-B59A-4B6C-81AC-A194CBFDD665}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A090917-B59A-4B6C-81AC-A194CBFDD665}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A090917-B59A-4B6C-81AC-A194CBFDD665}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BB9ED54A-D344-4D7B-9281-F259BC471364}
+	EndGlobalSection
+EndGlobal
