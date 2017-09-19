@@ -24,19 +24,18 @@
     <script>
       $(document).ready(function () {
         //#region Settings
-        var apiPath = "api/DataHub";
-        var env = location.href.match(/http:\/\/localhost/i) ? 'dev' : 'qa';
+        var apiPath = "dpi/ComaData";
+        var env = location.href.match(/http:\/\/localhost/i) ? 'dev' : 'az';
         var dataServiceHost = {
-          dev: "http://localhost:64211",
-          //dev: "http://usmrtpwiisq01:97/Services/DataHub",
-          qa:"https://usmrtpwiisq01:497/Services/DataHub",
+          dev: "http://localhost:59680",
+          az:"http://comadataapi.azurewebsites.net",
           //qa: location.origin + "/Services/DataHub"
         };
         var serviceUrl = [dataServiceHost[env], apiPath].join("/");
         //#endregion
 
         // Show grid
-        var dbObjectName = "olympic_VIsAaas";
+        var dbObjectName = "Todoes";
         showGrid("#grid", serviceUrl, dbObjectName);
 
         //#region Helpers
@@ -55,21 +54,21 @@
                 },
                 update: {
                   url: function (data) {
-                    return endPoint + "('" + data.SecurityCode + "')";
+                    return endPoint + "(" + data.Id + ")";
                   },
                   xhrFields: {
                     withCredentials: true
                   }
                 }
               },
-              serverPaging: true,
+              serverPaging: false,
               pageSize: 20,
               schema: {
                 model: {
-                  id: "SecurityCode",
+                  id: "Id",
                   fields: {
-                    SecurityCode: { editable: false },
-                    SecurityName: { editable: false }
+                    Action: { editable: false },
+                    DateStamp: { editable: true }
                   }
                 }
               }
@@ -96,25 +95,27 @@
             editable: { update: true, destroy: false },
             columns: [
               {
-                field: "SecurityCode",
-                title: "Security Code"
+                field: "Action"
               },
               {
-                field: "SecurityName",
-                title: "Security Name"
-                //,              format: "{0:c}"
+                field: "DateStamp",
+                title: "Date Stamp"
+                ,              format: "{0:MM/dd/yyyy}"
               },
               {
-                field: "IsAaa",
-                title: "Is Aaa",
+                field: "IsDone",
+                title: "Is Done",
                 sortable: true,
-                editor: customBoolEditor("IsAaa"),
+                editor: customBoolEditor("IsDone"),
                 width: "50px",
                 filterable: false
                 //,              format: "{0:c}"
               }
               //,            { command: ["edit"/*, "destroy"*/], title: "&nbsp;", width: "250px" }
-            ]
+            ],
+            error: function (e) {
+              alert(e);
+            }
           });
         }
         function customBoolEditor(fieldName) {
