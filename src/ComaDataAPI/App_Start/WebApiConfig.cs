@@ -15,6 +15,11 @@ namespace ComaDataAPI {
       // Web API routes
       config.MapHttpAttributeRoutes();
 
+      // Enable CORS
+      var cors = new EnableCorsAttribute("*", "*", "*");
+      cors.SupportsCredentials = true;
+      config.EnableCors(cors);
+
       config.Filter().Expand().Select().OrderBy().MaxTop(null).Count();
       await config.MapRestierRoute<EntityFrameworkApi<COMA.ComaContext>>(
           "ComaData",
