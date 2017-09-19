@@ -55,7 +55,7 @@ namespace COMA
     #region Database context
 
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.32.0.0")]
-    public class ComaContext : System.Data.Entity.DbContext, IComaContext
+    public partial class ComaContext : System.Data.Entity.DbContext, IComaContext
     {
         public System.Data.Entity.DbSet<Todo> Todoes { get; set; } // Todo
 
