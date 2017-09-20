@@ -71,6 +71,9 @@
                     DateStamp: { editable: true }
                   }
                 }
+              },
+              error: function (e) {
+                alert(endPoint+"\n"+JSON.stringify(e,null,2));
               }
             },
             toolbar: ["save", "cancel", "excel", "pdf"],
@@ -112,10 +115,7 @@
                 //,              format: "{0:c}"
               }
               //,            { command: ["edit"/*, "destroy"*/], title: "&nbsp;", width: "250px" }
-            ],
-            error: function (e) {
-              alert(e);
-            }
+            ]
           });
         }
         function customBoolEditor(fieldName) {
