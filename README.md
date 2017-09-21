@@ -2,4 +2,5 @@
 ### Common Architecture - COMA
 Testable >> Configurable >> Traceable >> Loggable >> ...
 
-| [Wiki](https://github.com/dimokgit/COMA/wiki) | [Web Site](http://comasite.azurewebsites.net/) | [Data Web API](http://comadataapi.azurewebsites.net/swagger/ui/index) | [Integration Tests](http://comadataapi.azurewebsites.net/swagger/ui/index#!/Test/Test_RunTest) |
+| [Wiki](https://github.com/dimokgit/COMA/wiki) | [Web Site](http://comasite.azurewebsites.net/) | [Data Web API](http://comadataapi.azurewebsites.net/swagger/ui/index) | [Integration Tests](http://comadataapi.azurewebsites.net/api/test/RunTest
+) |
