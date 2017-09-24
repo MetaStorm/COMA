@@ -7,6 +7,7 @@ using System.Web.OData.Extensions;
 using Microsoft.Restier.Providers.EntityFramework;
 using Microsoft.Restier.Publishers.OData;
 using Microsoft.Restier.Publishers.OData.Batch;
+using Swashbuckle.Application;
 
 namespace ComaDataAPI {
   public static class WebApiConfig {
@@ -15,6 +16,9 @@ namespace ComaDataAPI {
 
       // Web API routes
       config.MapHttpAttributeRoutes();
+
+      // Redirect root to Swagger UI
+      //config.Routes.MapHttpRoute(name: "Swagger UI", routeTemplate: "", defaults: null, constraints: null, handler: new RedirectHandler(SwaggerDocsConfig.DefaultRootUrlResolver, "swagger/ui/index"));
 
       // Enable CORS
       var cors = new EnableCorsAttribute("*", "*", "*");

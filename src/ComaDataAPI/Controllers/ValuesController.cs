@@ -56,7 +56,7 @@ namespace ComaDataAPI.Controllers {
       return await RunTestImpl(false);
     }
     async Task<IHttpActionResult> RunTestImpl(bool fast) {
-      //Foundation.Testable.UnTest().Count();
+      Foundation.Testable.UnTest().Count();
       Func<Foundation.TestableException, bool> isExcluded = te => Configer.ExcludeTests.Contains(te.TestedType.FullName.ToLower());
       var errors = new List<Foundation.TestableException>();
       var testOutput = (await Foundation.Testable.RunTestsAsync(fast, exc => { if(!isExcluded(exc)) errors.Add(exc); return true; }, Configer.ExcludeTests)).OrderBy(t => t.Key.FullName).ToArray();
