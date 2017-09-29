@@ -15,44 +15,10 @@ namespace ComaDataAPI.Controllers {
     class Configer : Foundation.Config<Configer> {
       [Foundation.CustomConfig.appSettings]
       public static string[] ExcludeTests => KeyValue<string>().Split(',');
-
-      public static IList<Assembly> LoadAssemblies() {
-        var dlls = Helpers.FindFiles("*.dll");
-        var codeBase = Helpers.ToFunc((Assembly a) => new Uri(a.CodeBase.IfEmpty(a.Location)));
-        var assemblies = AppDomain.CurrentDomain.GetAssemblies().Where(a => !a.IsDynamic).ToArray();
-        var dllsToLoad = (from dll in dlls
-                          join a in assemblies.Select(a => new { a, cb = codeBase(a) }) on new Uri(dll) equals a.cb into g
-                          where g.IsEmpty()
-                          where !dll.Contains("\\Microsoft.") && !dll.StartsWith("\\System.")
-                          select dll
-                          ).ToArray();
-        var loadedAssembleys = assemblies.Concat(dllsToLoad.Select(dll => {
-          try {
-            return Assembly.LoadFile(dll);
-          }catch(Exception exc) {
-            throw;
-          }
-        }));
-        //Func<Assembly, Type[]> loadTypes = a => {
-        //  try {
-        //    return a.GetTypes();
-        //  }
-        //  catch (ReflectionTypeLoadException exc) {
-        //    if (errorHandler != null) {
-        //      exc.LoaderExceptions.ForEach(e => errorHandler(e));
-        //      return new Type[0];
-        //    }
-        //    throw;
-        //  }
-        //};
-        return loadedAssembleys.ToList();
-      }
-
     }
     [Route("RunTest")]
     [HttpGet]
     public async Task<IHttpActionResult> RunTest() {
-      Configer.LoadAssemblies().Count();
       return await RunTestImpl(false);
     }
     async Task<IHttpActionResult> RunTestImpl(bool fast) {
