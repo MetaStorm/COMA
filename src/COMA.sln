@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.15
+VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComaModel", "ComaModel\ComaModel.csproj", "{79A70AD2-D549-4E9D-AA05-F242B6DA94B9}"
 EndProject
@@ -29,6 +29,8 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "ComaSite", "ComaSite\", "{3
 		DefaultWebSiteLanguage = "Visual C#"
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComaTests", "ComaTests\ComaTests.csproj", "{7C1B79E4-93F8-4306-B2BA-1ED7D925CC10}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,10 @@ Global
 		{33D61538-E352-4472-AB11-E614819879B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{33D61538-E352-4472-AB11-E614819879B6}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{33D61538-E352-4472-AB11-E614819879B6}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{7C1B79E4-93F8-4306-B2BA-1ED7D925CC10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C1B79E4-93F8-4306-B2BA-1ED7D925CC10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C1B79E4-93F8-4306-B2BA-1ED7D925CC10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C1B79E4-93F8-4306-B2BA-1ED7D925CC10}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
