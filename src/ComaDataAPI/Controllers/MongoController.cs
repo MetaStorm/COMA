@@ -41,7 +41,7 @@ namespace ComaDataAPI.Controllers {
     public IHttpActionResult Todos() {
       var database = "forex";
       var collection = "ToDo";
-      var todo = new { _id = ObjectId.Empty, What = "", When = "" };
+      var todo = new { _id = ObjectId.Empty, What = "", When = new BsonDateTime(DateTime.UtcNow) };
       return Ok(HedgeHog.MongoExtensions.ReadCollectionAnon(todo, Configer.MongoUriFull, database, collection).ToArray());
     }
     [HttpGet, Route("RunTest")]
