@@ -1,6 +1,7 @@
 ﻿using ComaModel;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MongoDB.Bson;
+using MongoDB.Bson.IO;
 using SimpleExample;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace ComaModel.Tests {
       String uri = "mongodb://dimok:1Aaaaaaa@ds040017.mlab.com:40017/forex";
       var database = "forex";
       var collection = "ToDo";
-      var todo = new { _id = ObjectId.Empty, What = "", When = "" };
+      var todo = new { _id = ObjectId.Empty, What = "", When = new BsonDateTime(0) };
       var json = HedgeHog.MongoExtensions.ReadCollectionAnon(todo, uri, database, collection).ToArray();
       Console.WriteLine(json.ToJson());
       Assert.AreEqual("Code", json[0].What);

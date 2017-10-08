@@ -31,6 +31,8 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "ComaSite", "ComaSite\", "{3
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComaTests", "ComaTests\ComaTests.csproj", "{7C1B79E4-93F8-4306-B2BA-1ED7D925CC10}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MongoExtensions", "MongoExtensions\MongoExtensions.csproj", "{15E757E0-597A-49F0-AA4E-E4DFEE2A8886}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +55,10 @@ Global
 		{7C1B79E4-93F8-4306-B2BA-1ED7D925CC10}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C1B79E4-93F8-4306-B2BA-1ED7D925CC10}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C1B79E4-93F8-4306-B2BA-1ED7D925CC10}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15E757E0-597A-49F0-AA4E-E4DFEE2A8886}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15E757E0-597A-49F0-AA4E-E4DFEE2A8886}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15E757E0-597A-49F0-AA4E-E4DFEE2A8886}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15E757E0-597A-49F0-AA4E-E4DFEE2A8886}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
