@@ -22,8 +22,8 @@
     ConfigFilenameSearchOrder = new[] { "app.config", "web.config" }; // Add more here if required. The config files are searched for in the local project first, then the whole solution second.
     GenerateSeparateFiles = false;
     MakeClassesInternal = false;
-    MakeClassesPartial = false;
-    MakeDbContextInterfacePartial = false;
+    MakeClassesPartial = true;
+    MakeDbContextInterfacePartial = true;
     UseMappingTables = true; // If true, mapping will be used and no mapping tables will be generated. If false, all tables will be generated.
     UsePascalCase = true;    // This will rename the generated C# tables & properties to use PascalCase. If false table & property names will be left alone.
     UseDataAnnotations = false; // If true, will add data annotations to the poco classes.
@@ -45,7 +45,7 @@
     IncludeQueryTraceOn9481Flag = false; // If SqlServer 2014 appears frozen / take a long time when this file is saved, try setting this to true (you will also need elevated privileges).
     IncludeCodeGeneratedAttribute = true; // If true, will include the GeneratedCode attribute, false to remove it.
     UsePrivateSetterForComputedColumns = true; // If the columns is computed, use a private setter.
-    AdditionalNamespaces = new[] { "" };  // To include extra namespaces, include them here. i.e. "Microsoft.AspNet.Identity.EntityFramework"
+    AdditionalNamespaces = new[] { "Newtonsoft.Json" };  // To include extra namespaces, include them here. i.e. "Microsoft.AspNet.Identity.EntityFramework"
     AdditionalContextInterfaceItems = new[] // To include extra db context interface items, include them here. Also set MakeClassesPartial=true, and implement the partial DbContext class functions.
     {
         ""  //  example: "void SetAutoDetectChangesEnabled(bool flag);"
@@ -56,11 +56,11 @@
     // For more control, take a look at ForeignKeyAnnotationsProcessing() further down
     AdditionalReverseNavigationsDataAnnotations = new string[] // Data Annotations for all ReverseNavigationProperty.
     {
-        // "JsonIgnore" // Also add "Newtonsoft.Json" to the AdditionalNamespaces array above
+        "JsonIgnore" // Also add "Newtonsoft.Json" to the AdditionalNamespaces array above
     };
     AdditionalForeignKeysDataAnnotations = new string[] // Data Annotations for all ForeignKeys.
     {
-        // "JsonIgnore" // Also add "Newtonsoft.Json" to the AdditionalNamespaces array above
+        "JsonIgnore" // Also add "Newtonsoft.Json" to the AdditionalNamespaces array above
     };
     ColumnNameToDataAnnotation = new Dictionary<string, string>
     {
@@ -161,9 +161,9 @@
     //              TableFilterInclude = new Regex("^table_name1$|^table_name2$|etc");
     //              ColumnFilterExclude = new Regex("^FK_.*$");
     SchemaFilterExclude = null;
-    SchemaFilterInclude = null;
+    SchemaFilterInclude = new Regex("Jira|meta");
     TableFilterExclude = null;
-		TableFilterInclude = new Regex("^Todo$");
+		TableFilterInclude = null;//new Regex("^Todo$");
     ColumnFilterExclude = null;
 
     // Filtering of tables using a function. This can be used in conjunction with the Regex's above.

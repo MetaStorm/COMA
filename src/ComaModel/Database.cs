@@ -9,7 +9,7 @@
 // The following connection settings were used to generate this file:
 //     Configuration file:     "ComaModel\App.config"
 //     Connection String Name: "ComaContext"
-//     Connection String:      "Data Source=brh86eedvq.database.windows.net;Initial Catalog=MetaBank;User ID=merauser;password=**zapped**;"
+//     Connection String:      "Data Source=brh86eedvq.database.windows.net;Initial Catalog=tSqlT;User ID=merauser;password=**zapped**;"
 // ------------------------------------------------------------------------------------------------
 // Database Edition       : SQL Azure
 // Database Engine Edition: Azure
@@ -29,12 +29,27 @@
 
 namespace COMA
 {
+    using Newtonsoft.Json;
 
     #region Unit of work
 
-    public interface IComaContext : System.IDisposable
+    public partial interface IComaContext : System.IDisposable
     {
-        System.Data.Entity.DbSet<Todo> Todoes { get; set; } // Todo
+        System.Data.Entity.DbSet<Jira_Project> Jira_Projects { get; set; } // Project
+        System.Data.Entity.DbSet<Jira_ProjectIssueType> Jira_ProjectIssueTypes { get; set; } // ProjectIssueType
+        System.Data.Entity.DbSet<Jira_ProjectIssueTypeWorkflow> Jira_ProjectIssueTypeWorkflows { get; set; } // ProjectIssueTypeWorkflow
+        System.Data.Entity.DbSet<Jira_TransitionAction> Jira_TransitionActions { get; set; } // TransitionAction
+        System.Data.Entity.DbSet<Jira_User> Jira_Users { get; set; } // User
+        System.Data.Entity.DbSet<Jira_UserGroup> Jira_UserGroups { get; set; } // UserGroup
+        System.Data.Entity.DbSet<Jira_Workflow> Jira_Workflows { get; set; } // Workflow
+        System.Data.Entity.DbSet<Jira_WorkflowScheme> Jira_WorkflowSchemes { get; set; } // WorkflowScheme
+        System.Data.Entity.DbSet<Jira_WorkflowStep> Jira_WorkflowSteps { get; set; } // WorkflowStep
+        System.Data.Entity.DbSet<Jira_WorkflowTransition> Jira_WorkflowTransitions { get; set; } // WorkflowTransition
+        System.Data.Entity.DbSet<Jira_WorkflowTrantisionWithPosition> Jira_WorkflowTrantisionWithPositions { get; set; } // WorkflowTrantisionWithPosition
+        System.Data.Entity.DbSet<meta_Action> meta_Actions { get; set; } // Action
+        System.Data.Entity.DbSet<meta_TestTableJiraSetting> meta_TestTableJiraSettings { get; set; } // TestTableJiraSettings
+        System.Data.Entity.DbSet<meta_TestTableJiraSettingsTest> meta_TestTableJiraSettingsTests { get; set; } // TestTableJiraSettingsTest
+        System.Data.Entity.DbSet<meta_VTestTableJiraSettings10> meta_VTestTableJiraSettings10 { get; set; } // vTestTableJiraSettings_10
 
         int SaveChanges();
         System.Threading.Tasks.Task<int> SaveChangesAsync();
@@ -57,7 +72,21 @@ namespace COMA
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.32.0.0")]
     public partial class ComaContext : System.Data.Entity.DbContext, IComaContext
     {
-        public System.Data.Entity.DbSet<Todo> Todoes { get; set; } // Todo
+        public System.Data.Entity.DbSet<Jira_Project> Jira_Projects { get; set; } // Project
+        public System.Data.Entity.DbSet<Jira_ProjectIssueType> Jira_ProjectIssueTypes { get; set; } // ProjectIssueType
+        public System.Data.Entity.DbSet<Jira_ProjectIssueTypeWorkflow> Jira_ProjectIssueTypeWorkflows { get; set; } // ProjectIssueTypeWorkflow
+        public System.Data.Entity.DbSet<Jira_TransitionAction> Jira_TransitionActions { get; set; } // TransitionAction
+        public System.Data.Entity.DbSet<Jira_User> Jira_Users { get; set; } // User
+        public System.Data.Entity.DbSet<Jira_UserGroup> Jira_UserGroups { get; set; } // UserGroup
+        public System.Data.Entity.DbSet<Jira_Workflow> Jira_Workflows { get; set; } // Workflow
+        public System.Data.Entity.DbSet<Jira_WorkflowScheme> Jira_WorkflowSchemes { get; set; } // WorkflowScheme
+        public System.Data.Entity.DbSet<Jira_WorkflowStep> Jira_WorkflowSteps { get; set; } // WorkflowStep
+        public System.Data.Entity.DbSet<Jira_WorkflowTransition> Jira_WorkflowTransitions { get; set; } // WorkflowTransition
+        public System.Data.Entity.DbSet<Jira_WorkflowTrantisionWithPosition> Jira_WorkflowTrantisionWithPositions { get; set; } // WorkflowTrantisionWithPosition
+        public System.Data.Entity.DbSet<meta_Action> meta_Actions { get; set; } // Action
+        public System.Data.Entity.DbSet<meta_TestTableJiraSetting> meta_TestTableJiraSettings { get; set; } // TestTableJiraSettings
+        public System.Data.Entity.DbSet<meta_TestTableJiraSettingsTest> meta_TestTableJiraSettingsTests { get; set; } // TestTableJiraSettingsTest
+        public System.Data.Entity.DbSet<meta_VTestTableJiraSettings10> meta_VTestTableJiraSettings10 { get; set; } // vTestTableJiraSettings_10
 
         static ComaContext()
         {
@@ -67,26 +96,31 @@ namespace COMA
         public ComaContext()
             : base("Name=ComaContext")
         {
+            InitializePartial();
         }
 
         public ComaContext(string connectionString)
             : base(connectionString)
         {
+            InitializePartial();
         }
 
         public ComaContext(string connectionString, System.Data.Entity.Infrastructure.DbCompiledModel model)
             : base(connectionString, model)
         {
+            InitializePartial();
         }
 
         public ComaContext(System.Data.Common.DbConnection existingConnection, bool contextOwnsConnection)
             : base(existingConnection, contextOwnsConnection)
         {
+            InitializePartial();
         }
 
         public ComaContext(System.Data.Common.DbConnection existingConnection, System.Data.Entity.Infrastructure.DbCompiledModel model, bool contextOwnsConnection)
             : base(existingConnection, model, contextOwnsConnection)
         {
+            InitializePartial();
         }
 
         protected override void Dispose(bool disposing)
@@ -107,58 +141,688 @@ namespace COMA
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Configurations.Add(new TodoConfiguration());
+            modelBuilder.Configurations.Add(new Jira_ProjectConfiguration());
+            modelBuilder.Configurations.Add(new Jira_ProjectIssueTypeConfiguration());
+            modelBuilder.Configurations.Add(new Jira_ProjectIssueTypeWorkflowConfiguration());
+            modelBuilder.Configurations.Add(new Jira_TransitionActionConfiguration());
+            modelBuilder.Configurations.Add(new Jira_UserConfiguration());
+            modelBuilder.Configurations.Add(new Jira_UserGroupConfiguration());
+            modelBuilder.Configurations.Add(new Jira_WorkflowConfiguration());
+            modelBuilder.Configurations.Add(new Jira_WorkflowSchemeConfiguration());
+            modelBuilder.Configurations.Add(new Jira_WorkflowStepConfiguration());
+            modelBuilder.Configurations.Add(new Jira_WorkflowTransitionConfiguration());
+            modelBuilder.Configurations.Add(new Jira_WorkflowTrantisionWithPositionConfiguration());
+            modelBuilder.Configurations.Add(new meta_ActionConfiguration());
+            modelBuilder.Configurations.Add(new meta_TestTableJiraSettingConfiguration());
+            modelBuilder.Configurations.Add(new meta_TestTableJiraSettingsTestConfiguration());
+            modelBuilder.Configurations.Add(new meta_VTestTableJiraSettings10Configuration());
+
+            OnModelCreatingPartial(modelBuilder);
         }
 
         public static System.Data.Entity.DbModelBuilder CreateModel(System.Data.Entity.DbModelBuilder modelBuilder, string schema)
         {
-            modelBuilder.Configurations.Add(new TodoConfiguration(schema));
+            modelBuilder.Configurations.Add(new Jira_ProjectConfiguration(schema));
+            modelBuilder.Configurations.Add(new Jira_ProjectIssueTypeConfiguration(schema));
+            modelBuilder.Configurations.Add(new Jira_ProjectIssueTypeWorkflowConfiguration(schema));
+            modelBuilder.Configurations.Add(new Jira_TransitionActionConfiguration(schema));
+            modelBuilder.Configurations.Add(new Jira_UserConfiguration(schema));
+            modelBuilder.Configurations.Add(new Jira_UserGroupConfiguration(schema));
+            modelBuilder.Configurations.Add(new Jira_WorkflowConfiguration(schema));
+            modelBuilder.Configurations.Add(new Jira_WorkflowSchemeConfiguration(schema));
+            modelBuilder.Configurations.Add(new Jira_WorkflowStepConfiguration(schema));
+            modelBuilder.Configurations.Add(new Jira_WorkflowTransitionConfiguration(schema));
+            modelBuilder.Configurations.Add(new Jira_WorkflowTrantisionWithPositionConfiguration(schema));
+            modelBuilder.Configurations.Add(new meta_ActionConfiguration(schema));
+            modelBuilder.Configurations.Add(new meta_TestTableJiraSettingConfiguration(schema));
+            modelBuilder.Configurations.Add(new meta_TestTableJiraSettingsTestConfiguration(schema));
+            modelBuilder.Configurations.Add(new meta_VTestTableJiraSettings10Configuration(schema));
             return modelBuilder;
         }
+
+        partial void InitializePartial();
+        partial void OnModelCreatingPartial(System.Data.Entity.DbModelBuilder modelBuilder);
     }
     #endregion
 
     #region POCO classes
 
-    // Todo
+    // Project
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.32.0.0")]
-    public class Todo
+    public partial class Jira_Project
+    {
+        public string Project { get; set; } // Project (Primary key) (length: 5)
+
+        public Jira_Project()
+        {
+            InitializePartial();
+        }
+
+        partial void InitializePartial();
+    }
+
+    // ProjectIssueType
+    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.32.0.0")]
+    public partial class Jira_ProjectIssueType
     {
         public int Id { get; set; } // ID (Primary key)
-        public string Action { get; set; } // Action (length: 50)
-        public bool IsDone { get; set; } // IsDone
-        public System.DateTime DateStamp { get; set; } // DateStamp
+        public string Project { get; set; } // Project (length: 5)
+        public string IssueType { get; set; } // IssueType (length: 255)
 
-        public Todo()
+        public Jira_ProjectIssueType()
         {
-            IsDone = false;
-            DateStamp = System.DateTime.Now;
+            InitializePartial();
         }
+
+        partial void InitializePartial();
+    }
+
+    // ProjectIssueTypeWorkflow
+    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.32.0.0")]
+    public partial class Jira_ProjectIssueTypeWorkflow
+    {
+        public int Id { get; set; } // ID (Primary key)
+        public string Project { get; set; } // Project (length: 5)
+        public string IssueType { get; set; } // IssueType (length: 64)
+        public string Workflow { get; set; } // Workflow (length: 256)
+
+        public Jira_ProjectIssueTypeWorkflow()
+        {
+            InitializePartial();
+        }
+
+        partial void InitializePartial();
+    }
+
+    // TransitionAction
+    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.32.0.0")]
+    public partial class Jira_TransitionAction
+    {
+        public int Id { get; set; } // ID (Primary key)
+        public string Project { get; set; } // Project (length: 64)
+        public string IssueType { get; set; } // IssueType (length: 128)
+        public string StatusFrom { get; set; } // StatusFrom (length: 64)
+        public string StatusTo { get; set; } // StatusTo (length: 64)
+        public string Action { get; set; } // Action (length: 256)
+        public string Comment { get; set; } // Comment (length: 256)
+        public bool IsActive { get; set; } // IsActive
+        public bool IsLocked { get; set; } // IsLocked
+        public bool IsTest { get; set; } // IsTest
+        public int Position { get; set; } // Position
+
+
+        public Jira_TransitionAction()
+        {
+            IsActive = true;
+            IsLocked = true;
+            IsTest = false;
+            Position = 0;
+            InitializePartial();
+        }
+
+        partial void InitializePartial();
+    }
+
+    // User
+    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.32.0.0")]
+    public partial class Jira_User
+    {
+        public string Key { get; set; } // Key (Primary key) (length: 50)
+        public string Display { get; set; } // Display (length: 128)
+
+        public Jira_User()
+        {
+            InitializePartial();
+        }
+
+        partial void InitializePartial();
+    }
+
+    // UserGroup
+    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.32.0.0")]
+    public partial class Jira_UserGroup
+    {
+        public string Name { get; set; } // Name (Primary key) (length: 128)
+
+        public Jira_UserGroup()
+        {
+            InitializePartial();
+        }
+
+        partial void InitializePartial();
+    }
+
+    // Workflow
+    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.32.0.0")]
+    public partial class Jira_Workflow
+    {
+        public string WorkflowName { get; set; } // WorkflowName (Primary key) (length: 255)
+        public string Description { get; set; } // Description
+
+        public Jira_Workflow()
+        {
+            InitializePartial();
+        }
+
+        partial void InitializePartial();
+    }
+
+    // WorkflowScheme
+    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.32.0.0")]
+    public partial class Jira_WorkflowScheme
+    {
+        public int Id { get; set; } // Id (Primary key)
+
+        public Jira_WorkflowScheme()
+        {
+            InitializePartial();
+        }
+
+        partial void InitializePartial();
+    }
+
+    // WorkflowStep
+    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.32.0.0")]
+    public partial class Jira_WorkflowStep
+    {
+        public string Workflow { get; set; } // Workflow (Primary key) (length: 255)
+        public string Step { get; set; } // Step (Primary key) (length: 128)
+        public bool IsVirtual { get; set; } // IsVirtual (Primary key)
+
+        public Jira_WorkflowStep()
+        {
+            InitializePartial();
+        }
+
+        partial void InitializePartial();
+    }
+
+    // WorkflowTransition
+    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.32.0.0")]
+    public partial class Jira_WorkflowTransition
+    {
+        public string Workflow { get; set; } // Workflow (Primary key) (length: 255)
+        public string StepFrom { get; set; } // StepFrom (Primary key) (length: 128)
+        public string Transition { get; set; } // Transition (Primary key) (length: 128)
+        public string StepTo { get; set; } // StepTo (Primary key) (length: 128)
+        public bool IsVirtual { get; set; } // IsVirtual
+        public int Position { get; set; } // Position
+
+        public Jira_WorkflowTransition()
+        {
+            Position = 0;
+            InitializePartial();
+        }
+
+        partial void InitializePartial();
+    }
+
+    // WorkflowTrantisionWithPosition
+    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.32.0.0")]
+    public partial class Jira_WorkflowTrantisionWithPosition
+    {
+        public string Workflow { get; set; } // Workflow (Primary key) (length: 255)
+        public string StateFom { get; set; } // StateFom (length: 128)
+        public string StateTo { get; set; } // StateTo (length: 128)
+        public int? PathPosition { get; set; } // PathPosition
+
+        public Jira_WorkflowTrantisionWithPosition()
+        {
+            InitializePartial();
+        }
+
+        partial void InitializePartial();
+    }
+
+    // Action
+    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.32.0.0")]
+    public partial class meta_Action
+    {
+        public int Id { get; set; } // ID (Primary key)
+        public string Namespace { get; set; } // Namespace (length: 64)
+        public string ClassName { get; set; } // ClassName (length: 64)
+        public string MethodName { get; set; } // MethodName (length: 64)
+        public string FullName { get; private set; } // FullName (length: 256)
+        public string Dll { get; set; } // DLL (length: 256)
+
+        public meta_Action()
+        {
+            InitializePartial();
+        }
+
+        partial void InitializePartial();
+    }
+
+    // TestTableJiraSettings
+    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.32.0.0")]
+    public partial class meta_TestTableJiraSetting
+    {
+        public string TableName { get; set; } // TableName (Primary key) (length: 256)
+        public string ReportItem { get; set; } // ReportItem (Primary key) (length: 32)
+        public string Project { get; set; } // Project (length: 50)
+        public string IssueType { get; set; } // IssueType (length: 128)
+        public string Subject { get; set; } // Subject (length: 258)
+        public string Description { get; set; } // Description (length: 1024)
+        public bool IsActive { get; set; } // IsActive
+        public string Error { get; private set; } // Error (length: 287)
+        public string Assignee { get; set; } // Assignee (length: 50)
+        public string GroupAssignee { get; set; } // GroupAssignee (length: 50)
+        public string Reporter { get; set; } // Reporter (length: 50)
+        public string Action { get; set; } // Action (length: 128)
+        public string CustomFields { get; set; } // CustomFields
+        public string RowKey { get; set; } // RowKey
+        public string TicketKey { get; set; } // TicketKey (length: 64)
+        public bool IsLocked { get; set; } // IsLocked
+        public string OnOrphaned { get; set; } // OnOrphaned (length: 32)
+        public string Link { get; set; } // Link
+
+        public meta_TestTableJiraSetting()
+        {
+            ReportItem = "";
+            IsActive = true;
+            IsLocked = true;
+            InitializePartial();
+        }
+
+        partial void InitializePartial();
+    }
+
+    // TestTableJiraSettingsTest
+    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.32.0.0")]
+    public partial class meta_TestTableJiraSettingsTest
+    {
+        public string TableName { get; set; } // TableName (Primary key) (length: 256)
+        public string Project { get; set; } // Project (length: 50)
+        public string IssueType { get; set; } // IssueType (length: 128)
+        public string ProjectMissing { get; set; } // ProjectMissing (length: 5)
+        public string IssueTypeMissing { get; set; } // IssueTypeMissing (length: 255)
+
+        public meta_TestTableJiraSettingsTest()
+        {
+            InitializePartial();
+        }
+
+        partial void InitializePartial();
+    }
+
+    // vTestTableJiraSettings_10
+    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.32.0.0")]
+    public partial class meta_VTestTableJiraSettings10
+    {
+        public string TableName { get; set; } // TableName (Primary key) (length: 256)
+        public string Project { get; set; } // Project (length: 50)
+        public string IssueType { get; set; } // IssueType (length: 128)
+        public string ProjectMissing { get; set; } // ProjectMissing (length: 5)
+        public string IssueTypeMissing { get; set; } // IssueTypeMissing (length: 255)
+
+        public meta_VTestTableJiraSettings10()
+        {
+            InitializePartial();
+        }
+
+        partial void InitializePartial();
     }
 
     #endregion
 
     #region POCO Configuration
 
-    // Todo
+    // Project
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.32.0.0")]
-    public class TodoConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<Todo>
+    public partial class Jira_ProjectConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<Jira_Project>
     {
-        public TodoConfiguration()
-            : this("dbo")
+        public Jira_ProjectConfiguration()
+            : this("Jira")
         {
         }
 
-        public TodoConfiguration(string schema)
+        public Jira_ProjectConfiguration(string schema)
         {
-            ToTable("Todo", schema);
+            ToTable("Project", schema);
+            HasKey(x => x.Project);
+
+            Property(x => x.Project).HasColumnName(@"Project").HasColumnType("nvarchar").IsRequired().HasMaxLength(5).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
+            InitializePartial();
+        }
+        partial void InitializePartial();
+    }
+
+    // ProjectIssueType
+    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.32.0.0")]
+    public partial class Jira_ProjectIssueTypeConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<Jira_ProjectIssueType>
+    {
+        public Jira_ProjectIssueTypeConfiguration()
+            : this("Jira")
+        {
+        }
+
+        public Jira_ProjectIssueTypeConfiguration(string schema)
+        {
+            ToTable("ProjectIssueType", schema);
             HasKey(x => x.Id);
 
             Property(x => x.Id).HasColumnName(@"ID").HasColumnType("int").IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
-            Property(x => x.Action).HasColumnName(@"Action").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(50);
-            Property(x => x.IsDone).HasColumnName(@"IsDone").HasColumnType("bit").IsRequired();
-            Property(x => x.DateStamp).HasColumnName(@"DateStamp").HasColumnType("datetime2").IsRequired();
+            Property(x => x.Project).HasColumnName(@"Project").HasColumnType("nvarchar").IsRequired().HasMaxLength(5);
+            Property(x => x.IssueType).HasColumnName(@"IssueType").HasColumnType("nvarchar").IsRequired().HasMaxLength(255);
+            InitializePartial();
         }
+        partial void InitializePartial();
+    }
+
+    // ProjectIssueTypeWorkflow
+    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.32.0.0")]
+    public partial class Jira_ProjectIssueTypeWorkflowConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<Jira_ProjectIssueTypeWorkflow>
+    {
+        public Jira_ProjectIssueTypeWorkflowConfiguration()
+            : this("Jira")
+        {
+        }
+
+        public Jira_ProjectIssueTypeWorkflowConfiguration(string schema)
+        {
+            ToTable("ProjectIssueTypeWorkflow", schema);
+            HasKey(x => x.Id);
+
+            Property(x => x.Id).HasColumnName(@"ID").HasColumnType("int").IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
+            Property(x => x.Project).HasColumnName(@"Project").HasColumnType("nvarchar").IsRequired().HasMaxLength(5);
+            Property(x => x.IssueType).HasColumnName(@"IssueType").HasColumnType("nvarchar").IsRequired().HasMaxLength(64);
+            Property(x => x.Workflow).HasColumnName(@"Workflow").HasColumnType("nvarchar").IsRequired().HasMaxLength(256);
+            InitializePartial();
+        }
+        partial void InitializePartial();
+    }
+
+    // TransitionAction
+    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.32.0.0")]
+    public partial class Jira_TransitionActionConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<Jira_TransitionAction>
+    {
+        public Jira_TransitionActionConfiguration()
+            : this("Jira")
+        {
+        }
+
+        public Jira_TransitionActionConfiguration(string schema)
+        {
+            ToTable("TransitionAction", schema);
+            HasKey(x => x.Id);
+
+            Property(x => x.Id).HasColumnName(@"ID").HasColumnType("int").IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
+            Property(x => x.Project).HasColumnName(@"Project").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(64);
+            Property(x => x.IssueType).HasColumnName(@"IssueType").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(128);
+            Property(x => x.StatusFrom).HasColumnName(@"StatusFrom").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(64);
+            Property(x => x.StatusTo).HasColumnName(@"StatusTo").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(64);
+            Property(x => x.Action).HasColumnName(@"Action").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(256);
+            Property(x => x.Comment).HasColumnName(@"Comment").HasColumnType("nvarchar").IsOptional().HasMaxLength(256);
+            Property(x => x.IsActive).HasColumnName(@"IsActive").HasColumnType("bit").IsRequired();
+            Property(x => x.IsLocked).HasColumnName(@"IsLocked").HasColumnType("bit").IsRequired();
+            Property(x => x.IsTest).HasColumnName(@"IsTest").HasColumnType("bit").IsRequired();
+            Property(x => x.Position).HasColumnName(@"Position").HasColumnType("int").IsRequired();
+
+            InitializePartial();
+        }
+        partial void InitializePartial();
+    }
+
+    // User
+    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.32.0.0")]
+    public partial class Jira_UserConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<Jira_User>
+    {
+        public Jira_UserConfiguration()
+            : this("Jira")
+        {
+        }
+
+        public Jira_UserConfiguration(string schema)
+        {
+            ToTable("User", schema);
+            HasKey(x => x.Key);
+
+            Property(x => x.Key).HasColumnName(@"Key").HasColumnType("nvarchar").IsRequired().HasMaxLength(50).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
+            Property(x => x.Display).HasColumnName(@"Display").HasColumnType("nvarchar").IsRequired().HasMaxLength(128);
+            InitializePartial();
+        }
+        partial void InitializePartial();
+    }
+
+    // UserGroup
+    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.32.0.0")]
+    public partial class Jira_UserGroupConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<Jira_UserGroup>
+    {
+        public Jira_UserGroupConfiguration()
+            : this("Jira")
+        {
+        }
+
+        public Jira_UserGroupConfiguration(string schema)
+        {
+            ToTable("UserGroup", schema);
+            HasKey(x => x.Name);
+
+            Property(x => x.Name).HasColumnName(@"Name").HasColumnType("nvarchar").IsRequired().HasMaxLength(128).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
+            InitializePartial();
+        }
+        partial void InitializePartial();
+    }
+
+    // Workflow
+    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.32.0.0")]
+    public partial class Jira_WorkflowConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<Jira_Workflow>
+    {
+        public Jira_WorkflowConfiguration()
+            : this("Jira")
+        {
+        }
+
+        public Jira_WorkflowConfiguration(string schema)
+        {
+            ToTable("Workflow", schema);
+            HasKey(x => x.WorkflowName);
+
+            Property(x => x.WorkflowName).HasColumnName(@"WorkflowName").HasColumnType("nvarchar").IsRequired().HasMaxLength(255).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
+            Property(x => x.Description).HasColumnName(@"Description").HasColumnType("varchar(max)").IsRequired().IsUnicode(false);
+            InitializePartial();
+        }
+        partial void InitializePartial();
+    }
+
+    // WorkflowScheme
+    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.32.0.0")]
+    public partial class Jira_WorkflowSchemeConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<Jira_WorkflowScheme>
+    {
+        public Jira_WorkflowSchemeConfiguration()
+            : this("Jira")
+        {
+        }
+
+        public Jira_WorkflowSchemeConfiguration(string schema)
+        {
+            ToTable("WorkflowScheme", schema);
+            HasKey(x => x.Id);
+
+            Property(x => x.Id).HasColumnName(@"Id").HasColumnType("int").IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
+            InitializePartial();
+        }
+        partial void InitializePartial();
+    }
+
+    // WorkflowStep
+    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.32.0.0")]
+    public partial class Jira_WorkflowStepConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<Jira_WorkflowStep>
+    {
+        public Jira_WorkflowStepConfiguration()
+            : this("Jira")
+        {
+        }
+
+        public Jira_WorkflowStepConfiguration(string schema)
+        {
+            ToTable("WorkflowStep", schema);
+            HasKey(x => new { x.Workflow, x.Step, x.IsVirtual });
+
+            Property(x => x.Workflow).HasColumnName(@"Workflow").HasColumnType("nvarchar").IsRequired().HasMaxLength(255).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
+            Property(x => x.Step).HasColumnName(@"Step").HasColumnType("nvarchar").IsRequired().HasMaxLength(128).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
+            Property(x => x.IsVirtual).HasColumnName(@"IsVirtual").HasColumnType("bit").IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
+            InitializePartial();
+        }
+        partial void InitializePartial();
+    }
+
+    // WorkflowTransition
+    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.32.0.0")]
+    public partial class Jira_WorkflowTransitionConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<Jira_WorkflowTransition>
+    {
+        public Jira_WorkflowTransitionConfiguration()
+            : this("Jira")
+        {
+        }
+
+        public Jira_WorkflowTransitionConfiguration(string schema)
+        {
+            ToTable("WorkflowTransition", schema);
+            HasKey(x => new { x.Workflow, x.StepFrom, x.StepTo, x.Transition });
+
+            Property(x => x.Workflow).HasColumnName(@"Workflow").HasColumnType("nvarchar").IsRequired().HasMaxLength(255).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
+            Property(x => x.StepFrom).HasColumnName(@"StepFrom").HasColumnType("nvarchar").IsRequired().HasMaxLength(128).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
+            Property(x => x.Transition).HasColumnName(@"Transition").HasColumnType("nvarchar").IsRequired().HasMaxLength(128).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
+            Property(x => x.StepTo).HasColumnName(@"StepTo").HasColumnType("nvarchar").IsRequired().HasMaxLength(128).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
+            Property(x => x.IsVirtual).HasColumnName(@"IsVirtual").HasColumnType("bit").IsRequired();
+            Property(x => x.Position).HasColumnName(@"Position").HasColumnType("int").IsRequired();
+            InitializePartial();
+        }
+        partial void InitializePartial();
+    }
+
+    // WorkflowTrantisionWithPosition
+    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.32.0.0")]
+    public partial class Jira_WorkflowTrantisionWithPositionConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<Jira_WorkflowTrantisionWithPosition>
+    {
+        public Jira_WorkflowTrantisionWithPositionConfiguration()
+            : this("Jira")
+        {
+        }
+
+        public Jira_WorkflowTrantisionWithPositionConfiguration(string schema)
+        {
+            ToTable("WorkflowTrantisionWithPosition", schema);
+            HasKey(x => x.Workflow);
+
+            Property(x => x.Workflow).HasColumnName(@"Workflow").HasColumnType("nvarchar").IsRequired().HasMaxLength(255).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
+            Property(x => x.StateFom).HasColumnName(@"StateFom").HasColumnType("nvarchar").IsOptional().HasMaxLength(128);
+            Property(x => x.StateTo).HasColumnName(@"StateTo").HasColumnType("nvarchar").IsOptional().HasMaxLength(128);
+            Property(x => x.PathPosition).HasColumnName(@"PathPosition").HasColumnType("int").IsOptional();
+            InitializePartial();
+        }
+        partial void InitializePartial();
+    }
+
+    // Action
+    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.32.0.0")]
+    public partial class meta_ActionConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<meta_Action>
+    {
+        public meta_ActionConfiguration()
+            : this("meta")
+        {
+        }
+
+        public meta_ActionConfiguration(string schema)
+        {
+            ToTable("Action", schema);
+            HasKey(x => x.Id);
+
+            Property(x => x.Id).HasColumnName(@"ID").HasColumnType("int").IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
+            Property(x => x.Namespace).HasColumnName(@"Namespace").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(64);
+            Property(x => x.ClassName).HasColumnName(@"ClassName").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(64);
+            Property(x => x.MethodName).HasColumnName(@"MethodName").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(64);
+            Property(x => x.FullName).HasColumnName(@"FullName").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(256).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Computed);
+            Property(x => x.Dll).HasColumnName(@"DLL").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(256);
+            InitializePartial();
+        }
+        partial void InitializePartial();
+    }
+
+    // TestTableJiraSettings
+    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.32.0.0")]
+    public partial class meta_TestTableJiraSettingConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<meta_TestTableJiraSetting>
+    {
+        public meta_TestTableJiraSettingConfiguration()
+            : this("meta")
+        {
+        }
+
+        public meta_TestTableJiraSettingConfiguration(string schema)
+        {
+            ToTable("TestTableJiraSettings", schema);
+            HasKey(x => new { x.TableName, x.ReportItem });
+
+            Property(x => x.TableName).HasColumnName(@"TableName").HasColumnType("nvarchar").IsRequired().HasMaxLength(256).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
+            Property(x => x.ReportItem).HasColumnName(@"ReportItem").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(32).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
+            Property(x => x.Project).HasColumnName(@"Project").HasColumnType("nvarchar").IsOptional().HasMaxLength(50);
+            Property(x => x.IssueType).HasColumnName(@"IssueType").HasColumnType("nvarchar").IsOptional().HasMaxLength(128);
+            Property(x => x.Subject).HasColumnName(@"Subject").HasColumnType("nvarchar").IsOptional().HasMaxLength(258);
+            Property(x => x.Description).HasColumnName(@"Description").HasColumnType("nvarchar").IsOptional().HasMaxLength(1024);
+            Property(x => x.IsActive).HasColumnName(@"IsActive").HasColumnType("bit").IsRequired();
+            Property(x => x.Error).HasColumnName(@"Error").HasColumnType("nvarchar").IsRequired().HasMaxLength(287).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Computed);
+            Property(x => x.Assignee).HasColumnName(@"Assignee").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(50);
+            Property(x => x.GroupAssignee).HasColumnName(@"GroupAssignee").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(50);
+            Property(x => x.Reporter).HasColumnName(@"Reporter").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(50);
+            Property(x => x.Action).HasColumnName(@"Action").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(128);
+            Property(x => x.CustomFields).HasColumnName(@"CustomFields").HasColumnType("varchar(max)").IsOptional().IsUnicode(false);
+            Property(x => x.RowKey).HasColumnName(@"RowKey").HasColumnType("varchar(max)").IsOptional().IsUnicode(false);
+            Property(x => x.TicketKey).HasColumnName(@"TicketKey").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(64);
+            Property(x => x.IsLocked).HasColumnName(@"IsLocked").HasColumnType("bit").IsRequired();
+            Property(x => x.OnOrphaned).HasColumnName(@"OnOrphaned").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(32);
+            Property(x => x.Link).HasColumnName(@"Link").HasColumnType("varchar(max)").IsOptional().IsUnicode(false);
+            InitializePartial();
+        }
+        partial void InitializePartial();
+    }
+
+    // TestTableJiraSettingsTest
+    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.32.0.0")]
+    public partial class meta_TestTableJiraSettingsTestConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<meta_TestTableJiraSettingsTest>
+    {
+        public meta_TestTableJiraSettingsTestConfiguration()
+            : this("meta")
+        {
+        }
+
+        public meta_TestTableJiraSettingsTestConfiguration(string schema)
+        {
+            ToTable("TestTableJiraSettingsTest", schema);
+            HasKey(x => x.TableName);
+
+            Property(x => x.TableName).HasColumnName(@"TableName").HasColumnType("nvarchar").IsRequired().HasMaxLength(256).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
+            Property(x => x.Project).HasColumnName(@"Project").HasColumnType("nvarchar").IsOptional().HasMaxLength(50);
+            Property(x => x.IssueType).HasColumnName(@"IssueType").HasColumnType("nvarchar").IsOptional().HasMaxLength(128);
+            Property(x => x.ProjectMissing).HasColumnName(@"ProjectMissing").HasColumnType("nvarchar").IsOptional().HasMaxLength(5);
+            Property(x => x.IssueTypeMissing).HasColumnName(@"IssueTypeMissing").HasColumnType("nvarchar").IsOptional().HasMaxLength(255);
+            InitializePartial();
+        }
+        partial void InitializePartial();
+    }
+
+    // vTestTableJiraSettings_10
+    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.32.0.0")]
+    public partial class meta_VTestTableJiraSettings10Configuration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<meta_VTestTableJiraSettings10>
+    {
+        public meta_VTestTableJiraSettings10Configuration()
+            : this("meta")
+        {
+        }
+
+        public meta_VTestTableJiraSettings10Configuration(string schema)
+        {
+            ToTable("vTestTableJiraSettings_10", schema);
+            HasKey(x => x.TableName);
+
+            Property(x => x.TableName).HasColumnName(@"TableName").HasColumnType("nvarchar").IsRequired().HasMaxLength(256).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
+            Property(x => x.Project).HasColumnName(@"Project").HasColumnType("nvarchar").IsOptional().HasMaxLength(50);
+            Property(x => x.IssueType).HasColumnName(@"IssueType").HasColumnType("nvarchar").IsOptional().HasMaxLength(128);
+            Property(x => x.ProjectMissing).HasColumnName(@"ProjectMissing").HasColumnType("nvarchar").IsOptional().HasMaxLength(5);
+            Property(x => x.IssueTypeMissing).HasColumnName(@"IssueTypeMissing").HasColumnType("nvarchar").IsOptional().HasMaxLength(255);
+            InitializePartial();
+        }
+        partial void InitializePartial();
     }
 
     #endregion
