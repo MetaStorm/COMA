@@ -72,11 +72,11 @@
     <Reference Include="Flurl.Http, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Flurl.Http.1.2.0\lib\net45\Flurl.Http.dll</HintPath>
     </Reference>
-    <Reference Include="Foundation, Version=2.3.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Foundation.2.3.4\lib\net452\Foundation.dll</HintPath>
+    <Reference Include="Foundation, Version=2.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Foundation.2.4.0\lib\net452\Foundation.dll</HintPath>
     </Reference>
-    <Reference Include="Foundation.Jira, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Foundation.Jira.4.0.0-pre001\lib\net452\Foundation.Jira.dll</HintPath>
+    <Reference Include="Foundation.Jira, Version=4.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Foundation.Jira.4.0.2\lib\net452\Foundation.Jira.dll</HintPath>
     </Reference>
     <Reference Include="HtmlAgilityPack, Version=1.5.1.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <HintPath>..\packages\HtmlAgilityPack.1.5.1\lib\Net45\HtmlAgilityPack.dll</HintPath>
@@ -90,8 +90,8 @@
     <Reference Include="JiraProcessor.ClientSupport, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\JiraProcessor.ClientSupport.2.1.0-pre001\lib\net452\JiraProcessor.ClientSupport.dll</HintPath>
     </Reference>
-    <Reference Include="JiraProcessor.Commoner, Version=2.2.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\JiraProcessor.Commoner.2.2.4\lib\net452\JiraProcessor.Commoner.dll</HintPath>
+    <Reference Include="JiraProcessor.Commoner, Version=2.3.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\JiraProcessor.Commoner.2.3.2\lib\net452\JiraProcessor.Commoner.dll</HintPath>
     </Reference>
     <Reference Include="JiraProcessor.PasswordReset, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\JiraProcessor.PasswordReset.2.0.1\lib\net452\JiraProcessor.PasswordReset.dll</HintPath>
@@ -329,7 +329,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Global.asax" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\SwaggerConfig.cs" />
@@ -356,11 +358,16 @@
     <Content Include="ProxyMonads.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Web.ComaDataAPI - Web Deploy.config">
+      <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>

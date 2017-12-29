@@ -4,23 +4,34 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Reflection;
+using System.Security.Principal;
 using System.Threading.Tasks;
 using System.Web.Http;
 using CommonExtensions;
 using Swashbuckle.Swagger.Annotations;
+using Westwind.Web.WebApi;
 
 namespace ComaDataAPI.Controllers {
-  [RoutePrefix("api/test")]
-  public class TestController : ApiController {
-    class Configer : Foundation.Config<Configer> {
+  [RoutePrefix("test")]
+  public class TestController :ApiController {
+    class Configer :Foundation.Config<Configer> {
       [Foundation.CustomConfig.appSettings]
       public static string[] ExcludeTests => KeyValue<string>().Split(',');
     }
+    [BasicAuthenticationFilter]
     [Route("RunTest")]
-    [HttpGet]
-    public async Task<IHttpActionResult> RunTest() {
-      return await RunTestImpl(false);
+    public async Task<IHttpActionResult> GetRunTest() => await RunTestImpl(false);
+
+    [BasicAuthenticationFilter]
+    [Route("Self")]
+    public IHttpActionResult GetSelf() {
+      return Ok(new {
+        User.Identity.AuthenticationType,
+        User.Identity.Name,
+        User.Identity.IsAuthenticated
+      });
     }
+
     async Task<IHttpActionResult> RunTestImpl(bool fast) {
       Foundation.Testable.UnTest().Count();
       Func<Foundation.TestableException, bool> isExcluded = te => Configer.ExcludeTests.Contains(te.TestedType.FullName.ToLower());

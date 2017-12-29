@@ -1,4 +1,5 @@
-﻿using Jira;
+﻿using Foundation.CustomConfig;
+using Jira;
 using Microsoft.Restier.Providers.EntityFramework;
 using Microsoft.Restier.Publishers.OData;
 using Microsoft.Restier.Publishers.OData.Batch;
@@ -6,8 +7,10 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using System.Web.Http.ExceptionHandling;
 using System.Web.OData.Extensions;
 using Wcf.ProxyMonads;
+using Westwind.Web.WebApi;
 
 namespace ComaDataAPI {
   public static class WebApiConfig {
@@ -25,9 +28,14 @@ namespace ComaDataAPI {
 
       var appXmlType = config.Formatters.XmlFormatter.SupportedMediaTypes.FirstOrDefault(t => t.MediaType == "application/xml");
       config.Formatters.XmlFormatter.SupportedMediaTypes.Remove(appXmlType);
-    // Redirect root to Swagger UI      //config.Routes.MapHttpRoute(name: "Swagger UI", routeTemplate: "", defaults: null, constraints: null, handler: new RedirectHandler(SwaggerDocsConfig.DefaultRootUrlResolver, "swagger/ui/index"));
-    // Enable CORS
-    var cors = new EnableCorsAttribute("*", "*", "*");
+      // Redirect root to Swagger UI      //config.Routes.MapHttpRoute(name: "Swagger UI", routeTemplate: "", defaults: null, constraints: null, handler: new RedirectHandler(SwaggerDocsConfig.DefaultRootUrlResolver, "swagger/ui/index"));
+      // BasicAuthentication: SID
+      BasicAuthenticationFilter.sid = () => Logger.SID;
+      // Exception
+      config.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;
+      config.Services.Add(typeof(IExceptionLogger), new TraceSourceExceptionLogger());
+      // Enable CORS
+      var cors = new EnableCorsAttribute("*", "*", "*");
       cors.SupportsCredentials = true;
       config.EnableCors(cors);
       // Restier
@@ -36,6 +44,15 @@ namespace ComaDataAPI {
           "ComaData",
           "dpi/ComaData",
           new RestierBatchHandler(GlobalConfiguration.DefaultServer));
+    }
+    public class TraceSourceExceptionLogger :ExceptionLogger {
+      public override void Log(ExceptionLoggerContext context) {
+        Logger.LogError($"Unhandled exception processing {context.Request.Method} for {context.Request.RequestUri}: {context.Exception}");
+      }
+    }
+    class Logger :Foundation.EventLogger<Logger> {
+      [appSettings]
+      public static string SID => KeyValue();
     }
   }
 }
