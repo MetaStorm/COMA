@@ -4,7 +4,10 @@ using Microsoft.Restier.Providers.EntityFramework;
 using Microsoft.Restier.Publishers.OData;
 using Microsoft.Restier.Publishers.OData.Batch;
 using System.Linq;
+using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Web.Http.ExceptionHandling;
@@ -29,6 +32,7 @@ namespace ComaDataAPI {
       var appXmlType = config.Formatters.XmlFormatter.SupportedMediaTypes.FirstOrDefault(t => t.MediaType == "application/xml");
       config.Formatters.XmlFormatter.SupportedMediaTypes.Remove(appXmlType);
       // Redirect root to Swagger UI      //config.Routes.MapHttpRoute(name: "Swagger UI", routeTemplate: "", defaults: null, constraints: null, handler: new RedirectHandler(SwaggerDocsConfig.DefaultRootUrlResolver, "swagger/ui/index"));
+      config.MessageHandlers.Add(new LogHandler());
       // BasicAuthentication: SID
       BasicAuthenticationFilter.sid = () => Logger.SID;
       // Exception
@@ -48,6 +52,12 @@ namespace ComaDataAPI {
     public class TraceSourceExceptionLogger :ExceptionLogger {
       public override void Log(ExceptionLoggerContext context) {
         Logger.LogError($"Unhandled exception processing {context.Request.Method} for {context.Request.RequestUri}: {context.Exception}");
+      }
+    }
+    public class LogHandler :DelegatingHandler {
+      protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken) {
+        Logger.LogVerbose(request.Method.Method + ":" + request.RequestUri, false);
+        return base.SendAsync(request, cancellationToken);
       }
     }
     class Logger :Foundation.EventLogger<Logger> {

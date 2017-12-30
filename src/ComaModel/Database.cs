@@ -35,6 +35,7 @@ namespace COMA
 
     public partial interface IComaContext : System.IDisposable
     {
+        System.Data.Entity.DbSet<Jira_LinkedClone> Jira_LinkedClones { get; set; } // LinkedClone
         System.Data.Entity.DbSet<Jira_Project> Jira_Projects { get; set; } // Project
         System.Data.Entity.DbSet<Jira_ProjectIssueType> Jira_ProjectIssueTypes { get; set; } // ProjectIssueType
         System.Data.Entity.DbSet<Jira_ProjectIssueTypeWorkflow> Jira_ProjectIssueTypeWorkflows { get; set; } // ProjectIssueTypeWorkflow
@@ -72,6 +73,7 @@ namespace COMA
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.32.0.0")]
     public partial class ComaContext : System.Data.Entity.DbContext, IComaContext
     {
+        public System.Data.Entity.DbSet<Jira_LinkedClone> Jira_LinkedClones { get; set; } // LinkedClone
         public System.Data.Entity.DbSet<Jira_Project> Jira_Projects { get; set; } // Project
         public System.Data.Entity.DbSet<Jira_ProjectIssueType> Jira_ProjectIssueTypes { get; set; } // ProjectIssueType
         public System.Data.Entity.DbSet<Jira_ProjectIssueTypeWorkflow> Jira_ProjectIssueTypeWorkflows { get; set; } // ProjectIssueTypeWorkflow
@@ -141,6 +143,7 @@ namespace COMA
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Configurations.Add(new Jira_LinkedCloneConfiguration());
             modelBuilder.Configurations.Add(new Jira_ProjectConfiguration());
             modelBuilder.Configurations.Add(new Jira_ProjectIssueTypeConfiguration());
             modelBuilder.Configurations.Add(new Jira_ProjectIssueTypeWorkflowConfiguration());
@@ -162,6 +165,7 @@ namespace COMA
 
         public static System.Data.Entity.DbModelBuilder CreateModel(System.Data.Entity.DbModelBuilder modelBuilder, string schema)
         {
+            modelBuilder.Configurations.Add(new Jira_LinkedCloneConfiguration(schema));
             modelBuilder.Configurations.Add(new Jira_ProjectConfiguration(schema));
             modelBuilder.Configurations.Add(new Jira_ProjectIssueTypeConfiguration(schema));
             modelBuilder.Configurations.Add(new Jira_ProjectIssueTypeWorkflowConfiguration(schema));
@@ -186,6 +190,36 @@ namespace COMA
     #endregion
 
     #region POCO classes
+
+    // LinkedClone
+    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.32.0.0")]
+    public partial class Jira_LinkedClone
+    {
+        public int Id { get; set; } // ID (Primary key)
+        public string Project { get; set; } // Project (length: 64)
+        public string IssueType { get; set; } // IssueType (length: 64)
+        public string Workflow { get; set; } // Workflow (length: 128)
+        public string StatusFrom { get; set; } // StatusFrom (length: 64)
+        public string StatusTo { get; set; } // StatusTo (length: 64)
+        public string ProjectCreate { get; set; } // ProjectCreate (length: 64)
+        public string IssueTypeCreate { get; set; } // IssueTypeCreate (length: 64)
+        public string CustomFields { get; set; } // CustomFields
+        public string Action { get; set; } // Action (length: 256)
+        public System.DateTime? DateStart { get; set; } // DateStart
+        public System.DateTime? DateEnd { get; set; } // DateEnd
+        public bool IsActive { get; set; } // IsActive
+        public bool IsLocked { get; set; } // IsLocked
+
+
+        public Jira_LinkedClone()
+        {
+            IsActive = false;
+            IsLocked = true;
+            InitializePartial();
+        }
+
+        partial void InitializePartial();
+    }
 
     // Project
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.32.0.0")]
@@ -466,6 +500,40 @@ namespace COMA
     #endregion
 
     #region POCO Configuration
+
+    // LinkedClone
+    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.32.0.0")]
+    public partial class Jira_LinkedCloneConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<Jira_LinkedClone>
+    {
+        public Jira_LinkedCloneConfiguration()
+            : this("Jira")
+        {
+        }
+
+        public Jira_LinkedCloneConfiguration(string schema)
+        {
+            ToTable("LinkedClone", schema);
+            HasKey(x => x.Id);
+
+            Property(x => x.Id).HasColumnName(@"ID").HasColumnType("int").IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
+            Property(x => x.Project).HasColumnName(@"Project").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(64);
+            Property(x => x.IssueType).HasColumnName(@"IssueType").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(64);
+            Property(x => x.Workflow).HasColumnName(@"Workflow").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(128);
+            Property(x => x.StatusFrom).HasColumnName(@"StatusFrom").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(64);
+            Property(x => x.StatusTo).HasColumnName(@"StatusTo").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(64);
+            Property(x => x.ProjectCreate).HasColumnName(@"ProjectCreate").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(64);
+            Property(x => x.IssueTypeCreate).HasColumnName(@"IssueTypeCreate").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(64);
+            Property(x => x.CustomFields).HasColumnName(@"CustomFields").HasColumnType("varchar(max)").IsOptional().IsUnicode(false);
+            Property(x => x.Action).HasColumnName(@"Action").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(256);
+            Property(x => x.DateStart).HasColumnName(@"DateStart").HasColumnType("date").IsOptional();
+            Property(x => x.DateEnd).HasColumnName(@"DateEnd").HasColumnType("date").IsOptional();
+            Property(x => x.IsActive).HasColumnName(@"IsActive").HasColumnType("bit").IsRequired();
+            Property(x => x.IsLocked).HasColumnName(@"IsLocked").HasColumnType("bit").IsRequired();
+
+            InitializePartial();
+        }
+        partial void InitializePartial();
+    }
 
     // Project
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.32.0.0")]
