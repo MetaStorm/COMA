@@ -75,8 +75,8 @@
     <Reference Include="Foundation, Version=2.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Foundation.2.4.0\lib\net452\Foundation.dll</HintPath>
     </Reference>
-    <Reference Include="Foundation.Jira, Version=4.0.9.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Foundation.Jira.4.0.9\lib\net452\Foundation.Jira.dll</HintPath>
+    <Reference Include="Foundation.Jira, Version=4.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Foundation.Jira.4.1.2\lib\net452\Foundation.Jira.dll</HintPath>
     </Reference>
     <Reference Include="HtmlAgilityPack, Version=1.5.1.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <HintPath>..\packages\HtmlAgilityPack.1.5.1\lib\Net45\HtmlAgilityPack.dll</HintPath>
@@ -84,8 +84,8 @@
     <Reference Include="Jira.Processing, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Jira.Processing.1.3.0.0\lib\net452\Jira.Processing.dll</HintPath>
     </Reference>
-    <Reference Include="JiraController, Version=2.4.7.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\JiraController.2.4.7\lib\net452\JiraController.dll</HintPath>
+    <Reference Include="JiraController, Version=2.4.8.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\JiraController.2.4.8\lib\net452\JiraController.dll</HintPath>
     </Reference>
     <Reference Include="JiraProcessor.ClientSupport, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\JiraProcessor.ClientSupport.2.1.0\lib\net452\JiraProcessor.ClientSupport.dll</HintPath>
@@ -155,11 +155,11 @@
     <Reference Include="Processing.AsyncBuffer, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Processing.AsyncBuffer.2.1.0\lib\net452\Processing.AsyncBuffer.dll</HintPath>
     </Reference>
-    <Reference Include="Proxies.External, Version=2.4.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Proxies.External.2.4.3\lib\net452\Proxies.External.dll</HintPath>
+    <Reference Include="Proxies.External, Version=2.4.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Proxies.External.2.4.5\lib\net452\Proxies.External.dll</HintPath>
     </Reference>
     <Reference Include="ProxyMonads, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Proxies.External.2.4.3\lib\net452\ProxyMonads.dll</HintPath>
+      <HintPath>..\packages\Proxies.External.2.4.5\lib\net452\ProxyMonads.dll</HintPath>
     </Reference>
     <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\RestSharp.105.2.3\lib\net46\RestSharp.dll</HintPath>
