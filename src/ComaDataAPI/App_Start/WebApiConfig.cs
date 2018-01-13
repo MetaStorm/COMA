@@ -39,9 +39,9 @@ namespace ComaDataAPI {
       config.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;
       config.Services.Add(typeof(IExceptionLogger), new TraceSourceExceptionLogger());
       // Enable CORS
-      var cors = new EnableCorsAttribute("*", "*", "*");
-      cors.SupportsCredentials = true;
-      config.EnableCors(cors);
+      //var cors = new EnableCorsAttribute("*", "*", "*");
+      //cors.SupportsCredentials = true;
+      //config.EnableCors(cors);
       // Restier
       config.Filter().Expand().Select().OrderBy().MaxTop(null).Count();
       await config.MapRestierRoute<EntityFrameworkApi<COMA.ComaContext>>(

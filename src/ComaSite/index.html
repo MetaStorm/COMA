@@ -35,7 +35,7 @@
         //#endregion
 
         // Show grid
-        var dbObjectName = "Todoes";
+        var dbObjectName = "meta_Actions";
         showGrid("#grid", serviceUrl, dbObjectName);
 
         //#region Helpers
@@ -49,7 +49,7 @@
                 read: {
                   url: endPoint,
                   xhrFields: {
-                    withCredentials: true
+                    //withCredentials: true
                   }
                 },
                 update: {
@@ -67,8 +67,9 @@
                 model: {
                   id: "Id",
                   fields: {
-                    Action: { editable: false },
-                    DateStamp: { editable: true }
+                    Namespace: { editable: true },
+                    ClassName: { editable: true },
+                    MethodName: { editable: true }
                   }
                 }
               },
@@ -98,20 +99,20 @@
             editable: { update: true, destroy: false },
             columns: [
               {
-                field: "Action"
+                field: "Namespace"
               },
               {
-                field: "DateStamp",
-                title: "Date Stamp"
+                field: "ClassName",
+                title: "Class Name"
                 ,              format: "{0:MM/dd/yyyy}"
               },
               {
-                field: "IsDone",
-                title: "Is Done",
+                field: "MethodName",
+                title: "Method Name",
                 sortable: true,
-                editor: customBoolEditor("IsDone"),
-                width: "50px",
-                filterable: false
+                //editor: customBoolEditor("IsDone"),
+                //width: "50px",
+                //filterable: false
                 //,              format: "{0:c}"
               }
               //,            { command: ["edit"/*, "destroy"*/], title: "&nbsp;", width: "250px" }

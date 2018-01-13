@@ -18,7 +18,6 @@ namespace ComaDataAPI.Controllers {
       [Foundation.CustomConfig.appSettings]
       public static string[] ExcludeTests => KeyValue<string>().Split(',');
     }
-    [BasicAuthenticationFilter]
     [Route("RunTest")]
     public async Task<IHttpActionResult> GetRunTest() => await RunTestImpl(false);
 
