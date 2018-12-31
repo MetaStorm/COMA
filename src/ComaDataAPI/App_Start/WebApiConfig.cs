@@ -18,8 +18,10 @@ using Westwind.Web.WebApi;
 namespace ComaDataAPI {
   public static class WebApiConfig {
     static WebApiConfig() {
-      var _workflowSchemeIds = new RestMonad().GetWorlflowSchemeIdsAsync().GetAwaiter().GetResult().Value.Select(int.Parse).ToArray();
-      RestConfiger.WorkflowSchemaIdsProvider = () => _workflowSchemeIds;
+      try {
+        var _workflowSchemeIds = new RestMonad().GetWorlflowSchemeIdsAsync().GetAwaiter().GetResult().Value.Select(int.Parse).ToArray();
+        RestConfiger.WorkflowSchemaIdsProvider = Task.FromResult(_workflowSchemeIds);
+      } catch { }
       //RestConfiger.WorkflowSchemaIdsProvider = tSQLt.tSQLtEntities.WorkflowSchemaIds;
       RestConfiger.ProjectIssueTypeWorkflowProvider = RestConfiger.GetProjectIssueTypeWorkflowAsync;
       //tSQLt.tSQLtEntities.GetProjectIssueTypeWorkflow;

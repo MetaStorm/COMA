@@ -196,3 +196,4 @@ FakesAssemblies/
 *.opt
 /src/*/.locals
 /src/ComaDataAPI/ProxyMonads.config
+/src/ComaDataAPI/App_Data/Store.txt
