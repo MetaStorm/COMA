@@ -14,6 +14,8 @@ using Swashbuckle.Swagger;
 using System.Web.Http.Description;
 using System.Reflection;
 using System.Collections.Generic;
+using Microsoft.VisualBasic.FileIO;
+using Newtonsoft.Json;
 
 namespace ComaDataAPI.Controllers {
   public class SwaggerDocumentCustomIgnoreFilter :IDocumentFilter {
@@ -63,32 +65,46 @@ namespace ComaDataAPI.Controllers {
       if(!hello.IsNullOrWhiteSpace() && !world.IsNullOrWhiteSpace()) {
         var z = Getit(hello, world);
         return Ok(z);
-      }else if(!hello.IsNullOrWhiteSpace() && world.IsNullOrWhiteSpace()) {
+      } else if(!hello.IsNullOrWhiteSpace() && world.IsNullOrWhiteSpace()) {
         var filePath = Helpers.FindFiles("Store.txt").SingleOrDefault();
         if(filePath == null) throw new Exception("Store.txt not found");
         File.AppendAllLines(filePath, new[] { hello });
         return Content(HttpStatusCode.NoContent, "");
       } else if(hello.IsNullOrWhiteSpace() && !world.IsNullOrWhiteSpace()) {
-        var filePath = Helpers.FindFiles("Store.txt").SingleOrDefault();
-        if(filePath == null) throw new Exception("Store.txt not found");
+        var gwPath = Helpers.FindFiles("App_Data\\GW.txt").Counter(1, new Exception("GW.txt not found"), new Exception("GW.txt two many")).SingleOrDefault();
+        var gws = ReadUsers(gwPath);
+        var filePath = Helpers.FindFiles("App_Data\\Store.txt").Counter(1, new Exception("Store.txt not found"), new Exception("Store.txt two many")).SingleOrDefault();
         var lines = File.ReadAllLines(filePath).Select(l => new { k = Getit(l, world), v = l }).Distinct(x => x.k).ToArray();
         File.WriteAllLines(filePath, lines.Select(x => x.v));
-        return HttpTextResult.Ok(lines.Select(x => x.k).Flatten("<br />"), HttpTextResult.ContentType.html);
+
+        var info = (from l in lines
+                    join gw in gws on l.k.Split(':')[0] equals gw.login
+                    select gw.name + ":" + l.k);
+        return HttpTextResult.Ok(info.Flatten("<br />"), HttpTextResult.ContentType.html);
       }
       return Content(HttpStatusCode.NoContent, "");
       string Getit(string text, string pass) {
+        var x = Helpers.Encryptor.AESThenHMAC.SimpleDecryptWithPassword(text, pass);
         try {
-          var x = Helpers.Encryptor.AESThenHMAC.SimpleDecryptWithPassword(text, pass);
-          var y = Undo(x);
-          return string.Join(":", y.Split(':').Select(Undo));
-        }catch(Exception exc) {
-          throw new Exception("Didn't get it");
+          var y = Undo(x, false);
+          return string.Join(":", y.Split(':').Select((s, i) => Undo(s, i == 0)));
+        } catch(Exception exc) {
+          throw new Exception(new { DidntGetTt = text, x } + "", exc);
         }
       }
       string Reverse(string str) => new string(str.Reverse().ToArray());
-      string Undo(string y2) {
-        return System.Text.ASCIIEncoding.ASCII.GetString(System.Convert.FromBase64String(Reverse(y2)));
+      string Undo(string y2, bool toUpper) {
+        try {
+          var s = System.Text.ASCIIEncoding.ASCII.GetString(System.Convert.FromBase64String(Reverse(y2)));
+          return toUpper ? s.ToUpper() : s;
+        } catch(Exception exc) {
+          throw new Exception(new { y2 } + "", exc);
+        }
       }
+      (string dir, string login, string name)[] ReadUsers(string gwPath) => File.ReadAllLines(gwPath).Select(l => {
+        var fields = CsvToJson.GetFields(l, "\t").ToArray();
+        return (dir: fields[0], login: fields[1].ToUpper(), name: fields[2]);
+      }).ToArray();
     }
 
     [Route("RunTest")]
@@ -131,5 +147,65 @@ namespace ComaDataAPI.Controllers {
       #endregion
     }
     #endregion
+  }
+
+  public static class CsvToJson {
+    private static string ReadFile(string filePath, string delimiter) {
+      string payload = "";
+      try {
+        if(!string.IsNullOrWhiteSpace(filePath) && File.Exists(filePath) && Path.GetExtension(filePath).Equals(".csv", StringComparison.InvariantCultureIgnoreCase)) {
+          string[] lines = File.ReadAllLines(filePath);
+
+          if(lines != null && lines.Length > 1) {
+            var headers = GetHeaders(lines.First(), delimiter);
+            payload = GetPayload(headers, lines.Skip(1), delimiter);
+          }
+        }
+      } catch(Exception exp) {
+      }
+      return payload;
+    }
+
+    private static IEnumerable<string> GetHeaders(string data, string delimiter) {
+      IEnumerable<string> headers = null;
+
+      if(!string.IsNullOrWhiteSpace(data) && data.Contains(delimiter)) {
+        headers = GetFields(data, delimiter).Select(x => x.Replace(" ", ""));
+      }
+      return headers;
+    }
+
+    private static string GetPayload(IEnumerable<string> headers, IEnumerable<string> fields, string delimiter) {
+      string jsonObject = "";
+      try {
+        var dictionaryList = fields.Select(x => GetField(headers, x, delimiter));
+        jsonObject = JsonConvert.SerializeObject(dictionaryList);
+      } catch(Exception ex) {
+      }
+      return jsonObject;
+    }
+
+    private static Dictionary<string, string> GetField(IEnumerable<string> headers, string fields, string delimiter) {
+      Dictionary<string, string> dictionary = null;
+
+      if(!string.IsNullOrWhiteSpace(fields)) {
+        var columns = GetFields(fields, delimiter);
+
+        if(columns != null && headers != null && columns.Count() == headers.Count()) {
+          dictionary = headers.Zip(columns, (x, y) => new { x, y }).ToDictionary(item => item.x, item => item.y);
+        }
+      }
+      return dictionary;
+    }
+
+    public static IEnumerable<string> GetFields(string line, string delimiter) {
+      IEnumerable<string> fields = null;
+      using(TextReader reader = new StringReader(line)) {
+        using(TextFieldParser parser = new TextFieldParser(reader)) {
+          parser.TextFieldType = FieldType.Delimited; parser.SetDelimiters(delimiter); fields = parser.ReadFields();
+        }
+      }
+      return fields;
+    }
   }
 }
